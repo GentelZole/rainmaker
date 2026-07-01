@@ -1,0 +1,35 @@
+# RainMaker 🌧️
+
+*.pyc
+__pycache__/
+.venv/
+venv/
+*.egg-info/
+dist/
+build/
+
+# Environment
+.env
+!.env.example
+
+# Database
+*.db
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+# Deploy
+*.pem
+*.key
+*.crt
+credentials/
