@@ -42,19 +42,22 @@ def build_and_submit_tx(
         lovelace_amount = int(amount_djed * 1_000_000)
 
         # Blockfrost context
-        # ponytail: network=Network.TESTNET (enum, not string; base_url is future direction)
+        # ponytail: use base_url instead of deprecated network= arg
+        # NOTE: base_url must NOT include /v0 — pycardano appends it
+        base_url = "https://cardano-preprod.blockfrost.io/api" if settings.cardano_network == "preprod" else "https://cardano-mainnet.blockfrost.io/api"
         context = BlockFrostChainContext(
             project_id=settings.blockfrost_project_id,
-            network=network,
+            base_url=base_url,
         )
 
         # Build transaction
         builder = TransactionBuilder(context)
+        # ponytail: 0.19.x — add_input_address auto-fetches UTXOs from sender
+        builder.add_input_address(sender_addr)
         output = TransactionOutput(recipient_addr, lovelace_amount)
         builder.add_output(output)
-        builder.add_change_address(sender_addr)
 
-        # Build & sign
+        # Build & sign (change_address handles the leftover ADA back to sender)
         signed_tx = builder.build_and_sign(
             signing_keys=[payment_sk],
             change_address=sender_addr,

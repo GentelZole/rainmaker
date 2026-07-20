@@ -8,6 +8,11 @@ from cryptography.hazmat.primitives.ciphers.aead import AESGCM
 from models import User, get_session
 
 
+def _normalize_phone(phone_number: str) -> str:
+    """Normalize phone number: strip + prefix for consistent DB lookups."""
+    return phone_number.lstrip("+")
+
+
 def _derive_key(pin: str, salt: bytes) -> bytes:
     """Derive AES-256 key from PIN using PBKDF2"""
     return hashlib.pbkdf2_hmac(
@@ -73,7 +78,7 @@ def create_wallet(phone_number: str, pin: str) -> dict:
     try:
         # Check if user exists
         existing = session.query(User).filter(
-            User.phone_number == phone_number
+            User.phone_number == _normalize_phone(phone_number)
         ).first()
         if existing:
             return {"status": "error", "error": "Phone number already registered"}
@@ -138,7 +143,7 @@ def get_wallet_for_send(phone_number: str, pin: str) -> Optional[dict]:
     session = get_session()
     try:
         user = session.query(User).filter(
-            User.phone_number == phone_number,
+            User.phone_number == _normalize_phone(phone_number),
             User.is_active == True,
         ).first()
 
@@ -175,5 +180,60 @@ def get_wallet_for_send(phone_number: str, pin: str) -> Optional[dict]:
             "seed_phrase": seed,
             "kyc_level": user.kyc_level,
         }
+    finally:
+        session.close()
+
+
+def delete_wallet(phone_number: str) -> dict:
+    """Delete a wallet (soft delete — mark inactive). Used when creating a new wallet."""
+    session = get_session()
+    try:
+        user = session.query(User).filter(
+            User.phone_number == _normalize_phone(phone_number),
+        ).first()
+        if not user:
+            return {"status": "error", "error": "No wallet found"}
+
+        user.is_active = False
+        session.commit()
+
+        # Also remove from address book
+        try:
+            from address_book import unregister_phone
+            unregister_phone(phone_number)
+        except Exception:
+            pass
+
+        return {"status": "deleted", "phone_number": phone_number}
+    finally:
+        session.close()
+
+
+def delete_wallet_with_pin(phone_number: str, pin: str) -> dict:
+    """Delete wallet after verifying PIN. Safer than delete_wallet."""
+    session = get_session()
+    try:
+        user = session.query(User).filter(
+            User.phone_number == _normalize_phone(phone_number),
+            User.is_active == True,
+        ).first()
+        if not user:
+            return {"status": "error", "error": "No active wallet found"}
+
+        # Verify PIN before deletion
+        if not verify_pin(pin, user.pin_hash):
+            return {"status": "wrong_pin"}
+
+        user.is_active = False
+        session.commit()
+
+        # Remove from address book
+        try:
+            from address_book import unregister_phone
+            unregister_phone(phone_number)
+        except Exception:
+            pass
+
+        return {"status": "deleted", "phone_number": phone_number}
     finally:
         session.close()

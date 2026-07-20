@@ -3,12 +3,17 @@ from typing import Optional
 from models import AddressBook, get_session
 
 
+def _normalize_phone(phone_number: str) -> str:
+    """Normalize phone number: strip + prefix for consistent DB lookups."""
+    return phone_number.lstrip("+")
+
+
 def lookup_by_phone(phone_number: str) -> Optional[dict]:
     """Resolve phone number to Cardano address (Tier 1 — MVP)"""
     session = get_session()
     try:
         entry = session.query(AddressBook).filter(
-            AddressBook.phone_number == phone_number
+            AddressBook.phone_number == _normalize_phone(phone_number)
         ).first()
         if entry:
             return {
@@ -35,7 +40,7 @@ def register_phone(
     session = get_session()
     try:
         existing = session.query(AddressBook).filter(
-            AddressBook.phone_number == phone_number
+            AddressBook.phone_number == _normalize_phone(phone_number)
         ).first()
         if existing:
             existing.cardano_address = cardano_address
@@ -59,15 +64,39 @@ def register_phone(
         session.close()
 
 
+def unregister_phone(phone_number: str) -> dict:
+    """Remove a phone number from the address book."""
+    session = get_session()
+    try:
+        entry = session.query(AddressBook).filter(
+            AddressBook.phone_number == _normalize_phone(phone_number)
+        ).first()
+        if entry:
+            session.delete(entry)
+            session.commit()
+            return {"status": "deleted", "phone": phone_number}
+        return {"status": "not_found", "phone": phone_number}
+    finally:
+        session.close()
+
+
 def resolve_destination(input_str: str) -> dict:
     """
     3-tier address resolution:
-    1. Phone number (digit string, >= 10 chars)
+    1. Phone number (digit string, >= 10 chars, optional + prefix)
     2. ADA Handle (starts with $) — post-MVP stub
     3. Full Cardano address (starts with addr)
     """
-    # Tier 1: Phone number
-    if input_str.isdigit() and len(input_str) >= 10:
+    # Strip whitespace
+    input_str = input_str.strip()
+
+    # Tier 1: Phone number (allow + prefix)
+    phone = input_str.lstrip("+")
+    if phone.isdigit() and len(phone) >= 10:
+        result = lookup_by_phone(phone)
+        if result:
+            return result
+        # Also try with + prefix in case stored that way
         result = lookup_by_phone(input_str)
         if result:
             return result
