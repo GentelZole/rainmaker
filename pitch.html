@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>RainMaker — USSD-to-Cardano for feature phones | Pitch Deck</title>
+<style>
+  :root{
+    --bg:#050507; --card:#0e1116; --line:#1e232b; --txt:#e7eaf0;
+    --mut:#9aa4b2; --blue:#3b82f6; --cyan:#06b6d4; --green:#10b981; --amber:#f59e0b;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--txt);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    line-height:1.55;-webkit-font-smoothing:antialiased}
+  .deck{max-width:1080px;margin:0 auto;padding:0 24px 80px}
+  section{padding:56px 0;border-bottom:1px solid var(--line)}
+  section:last-child{border-bottom:none}
+  .kicker{font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--blue);
+    font-weight:700;margin-bottom:14px}
+  h1{font-size:clamp(34px,6vw,58px);line-height:1.05;margin:0 0 18px;letter-spacing:-.02em}
+  h2{font-size:clamp(24px,3.4vw,34px);line-height:1.15;margin:0 0 18px;letter-spacing:-.01em}
+  h3{font-size:16px;margin:0 0 8px}
+  p{color:var(--mut);margin:0 0 14px;font-size:16px}
+  .lede{font-size:19px;color:#c8d3e0;max-width:60ch}
+  .grad{background:linear-gradient(100deg,var(--cyan),var(--blue));-webkit-background-clip:text;
+    background-clip:text;color:transparent}
+  .grid{display:grid;gap:16px}
+  .g2{grid-template-columns:repeat(auto-fit,minmax(240px,1fr))}
+  .g3{grid-template-columns:repeat(auto-fit,minmax(200px,1fr))}
+  .g4{grid-template-columns:repeat(auto-fit,minmax(160px,1fr))}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:20px}
+  .card p{margin:0;font-size:14.5px}
+  .stat{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px}
+  .stat b{display:block;font-size:clamp(24px,3.6vw,32px);letter-spacing:-.02em;color:#fff}
+  .stat span{font-size:12.5px;color:var(--mut);display:block;margin-top:4px}
+  .tags{display:flex;flex-wrap:wrap;gap:8px;margin:18px 0 0}
+  .tag{font-size:12px;padding:6px 12px;border-radius:999px;border:1px solid var(--line);
+    background:#0a0d12;color:#c8d3e0}
+  .tag.on{border-color:rgba(16,185,129,.5);color:var(--green)}
+  table{width:100%;border-collapse:collapse;font-size:14.5px}
+  th,td{text-align:left;padding:11px 10px;border-bottom:1px solid var(--line);vertical-align:top}
+  th{font-size:11.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--mut);font-weight:700}
+  td.n{color:#fff;font-weight:600;white-space:nowrap}
+  .flow{display:grid;gap:10px;margin:22px 0}
+  .flow div{background:var(--card);border:1px solid var(--line);border-left:3px solid var(--blue);
+    border-radius:10px;padding:14px 16px;font-size:14.5px;color:#c8d3e0}
+  .flow div b{color:#fff}
+  .mono{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:13px;
+    background:#0a0d12;border:1px solid var(--line);border-radius:10px;padding:16px;
+    color:var(--cyan);white-space:pre-wrap;overflow-x:auto}
+  a{color:var(--cyan);text-decoration:none}
+  a:hover{text-decoration:underline}
+  .cover{padding-top:72px}
+  .badge{display:inline-flex;align-items:center;gap:8px;font-size:12.5px;
+    border:1px solid var(--line);background:#0a0d12;border-radius:999px;padding:7px 14px;
+    color:#c8d3e0;margin-bottom:24px}
+  .dot{width:7px;height:7px;border-radius:50%;background:var(--green);
+    box-shadow:0 0 0 3px rgba(16,185,129,.18)}
+  .foot{font-size:12.5px;color:#6b7684;padding-top:28px}
+  ul{margin:0 0 14px;padding-left:20px;color:var(--mut);font-size:15px}
+  li{margin-bottom:7px}
+  .note{font-size:12.5px;color:#6b7684;margin-top:10px}
+  @media print{
+    body{background:#fff;color:#111}
+    section{page-break-inside:avoid;border-color:#ddd}
+    .card,.stat,.flow div,.mono{background:#fafafa;border-color:#ddd;color:#111}
+    h1,h2,h3,b,td.n{color:#000}
+    p,td,.stat span,ul{color:#333}
+  }
+</style>
+</head>
+<body>
+<div class="deck">
+
+  <section class="cover">
+    <div class="badge"><span class="dot"></span> Live on Cardano Preprod · USSD shortcode active</div>
+    <div class="kicker">Cardano PRIME application · RFP A — Wallets</div>
+    <h1>RainMaker:<br><span class="grad">stablecoin payments<br>from any feature phone</span></h1>
+    <p class="lede">27.4 million feature phones are connected to Kenyan networks today. Every one of them can dial a USSD code. RainMaker turns that code into a non-custodial Cardano wallet — no app, no internet, no blockchain knowledge. Send DJED or ADA to any Cardano address in the world for a flat $0.10.</p>
+    <div class="tags">
+      <span class="tag on">USSD live: *384*225533#</span>
+      <span class="tag">MIT open source</span>
+      <span class="tag">Non-custodial (encrypted-at-rest)</span>
+      <span class="tag">Python · FastAPI · pycardano</span>
+      <span class="tag">Kenya first</span>
+    </div>
+    <div class="foot">Submitted November 2026 · GentelZole · github.com/GentelZole/rainmaker</div>
+  </section>
+
+  <section>
+    <div class="kicker">01 — The problem</div>
+    <h2>Mobile money is a Kenyan success story that stops at the border</h2>
+    <div class="grid g3">
+      <div class="stat"><b>41.7M</b><span>active M-PESA customers (Safaricom, FY ended Mar 2026)</span></div>
+      <div class="stat"><b>KES 41.7T</b><span>moved through M-PESA in a single financial year</span></div>
+      <div class="stat"><b>27.4M</b><span>feature phones still connected in Kenya (CA, Jun 2026)</span></div>
+    </div>
+    <p style="margin-top:20px">Kenya has solved domestic value transfer. It has not solved three things that matter to the people at the base of the pyramid:</p>
+    <ul>
+      <li><b style="color:#fff">Outbound reach.</b> A Kenyan cannot send value to a Filipino, Nigerian or Indian wallet using the rail already in their hand. Remittance and cross-border corridors stay expensive and intermediated.</li>
+      <li><b style="color:#fff">Currency.</b> Every balance held in the rail is KES — an asset that has lost value against the dollar over any multi-year horizon. There is no self-custodial dollar anyone can hold without a smartphone and a bank account.</li>
+      <li><b style="color:#fff">Device exclusion.</b> Every crypto product of the last decade assumes an app store, a data bundle and a smartphone. 27.4 million devices are excluded by design, not by choice.</li>
+    </ul>
+    <p class="note">Sources: Communications Authority of Kenya, Q4 FY2025/26 Sector Statistics (Jun 2026); Safaricom PLC FY26 results (May 2026).</p>
+  </section>
+
+  <section>
+    <div class="kicker">02 — The product</div>
+    <h2>A Cardano wallet behind a USSD menu</h2>
+    <p class="lede">Dial the code. Set a PIN. Receive a Cardano wallet over SMS. From then on, the recipient's phone number <em>is</em> their address — RainMaker resolves phone → Cardano address behind the scenes. Addresses are never typed and never shown in the send flow.</p>
+    <div class="flow">
+      <div><b>1.</b> User dials <span class="mono" style="display:inline;padding:2px 6px">*384*225533#</span> — works on any handset, no data required</div>
+      <div><b>2.</b> Registers with a 4-digit PIN → HD wallet (CIP-1852, 12-word seed) is generated, AES-256-GCM encrypted, and the seed is delivered by SMS</div>
+      <div><b>3.</b> Chooses <b>Send → ADA or DJED</b> → enters recipient phone number or a full Cardano address → amount → PIN</div>
+      <div><b>4.</b> Transaction is built and signed server-side, submitted via Blockfrost, confirmed in ~20–60s on Cardano</div>
+      <div><b>5.</b> Recipient can sweep the funds into Lace or Eternl at any time with their paper seed phrase — the server never holds an unencrypted key at rest</div>
+    </div>
+    <div class="grid g2" style="margin-top:8px">
+      <div class="card"><h3>Fee comparison at $100</h3><p>M-PESA ≈ $0.92 · Machankura (Lightning) ≈ $1.00 · Kotani Pay ≈ $1.00 · <b style="color:var(--green)">RainMaker $0.10</b></p></div>
+      <div class="card"><h3>Fee comparison at $500</h3><p>Western Union ≈ $25 (5%) · M-PESA ≈ $1.00 · <b style="color:var(--green)">RainMaker $0.10 (0.02%)</b></p></div>
+    </div>
+  </section>
+
+  <section>
+    <div class="kicker">03 — What exists today</div>
+    <h2>Working software, not a slide</h2>
+    <div class="grid g2">
+      <div class="card">
+        <h3>Shipped</h3>
+        <ul style="margin-bottom:0">
+          <li>USSD menu engine with guided navigation and a back option on every screen</li>
+          <li>HD wallet generation, bcrypt PIN hashing, 5-attempt lockout, AES-256-GCM seed encryption</li>
+          <li>3-tier address resolution: phone number → $handle → full Cardano address</li>
+          <li>SMS delivery of wallet credentials, transaction history with sent/received direction, balance pre-checks</li>
+          <li>Systemd service, nginx-fronted HTTPS callback, 30 req/min rate limiting per phone</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3>Live proof (preprod)</h3>
+        <p>Shortcode <b style="color:#fff">*384*225533#</b> connected to the Africa's Talking sandbox. <b style="color:#fff">6 wallets</b> registered and <b style="color:#fff">3 on-chain transactions</b> submitted to Cardano Preprod, each with a verifiable tx hash in the in-app history.</p>
+        <p style="margin-top:10px"><a href="https://github.com/GentelZole/rainmaker">github.com/GentelZole/rainmaker</a> — MIT licensed, with architecture docs and a public demo page.</p>
+      </div>
+    </div>
+    <p class="note">Honest position: this is a testnet pilot with internal testers. It is not yet a mainnet product with users. The grant is what converts it into one — which is exactly the milestone structure PRIME funds.</p>
+  </section>
+
+  <section>
+    <div class="kicker">04 — Why Cardano needs this</div>
+    <h2>The missing primitive is distribution, not another AMM</h2>
+    <div class="grid g2">
+      <div class="card"><h3>It is a wallet primitive (RFP A)</h3><p>RainMaker is a Cardano wallet with a radically different input method. It reaches a device class — the feature phone — that no Cardano wallet, Lace included, can serve. 27.4M devices in one country.</p></div>
+      <div class="card"><h3>It manufactures net-new stablecoin holders</h3><p>Every registered user holds a DJED or USDCx balance on Cardano. This is TVL arriving from outside crypto: a Nairobi matatu driver or a Kilifi fisherman who has never held a dollar-denominated asset and has no exchange account.</p></div>
+      <div class="card"><h3>Two to four transactions per user per month</h3><p>Register, receive, send, sweep. Each is a Cardano transaction paying network fees. Feature-phone users are high-frequency, low-value — the exact profile that makes a chain's fee revenue real rather than speculative.</p></div>
+      <div class="card"><h3>Composable by every Cardano app</h3><p>The address book is a public API: any Cardano app (DEX, lender, payroll tool) can resolve a Kenyan phone number to a verified address and push value into it. RainMaker becomes the last mile for other Cardano products.</p></div>
+    </div>
+  </section>
+
+  <section>
+    <div class="kicker">05 — Market</div>
+    <h2>Kenya first, because the rails are already there</h2>
+    <div class="grid g4">
+      <div class="stat"><b>88.0M</b><span>mobile subscriptions, 165% penetration</span></div>
+      <div class="stat"><b>54.0M</b><span>mobile money subscriptions, 101% penetration</span></div>
+      <div class="stat"><b>568K</b><span>mobile money agents (cash-in / cash-out network)</span></div>
+      <div class="stat"><b>27.4M</b><span>feature phones on network</span></div>
+    </div>
+    <p style="margin-top:20px">The cash-in/cash-out agent network that makes M-PESA work is the same network that makes a stablecoin rail usable: an agent takes KES and the user receives DJED, or the reverse. RainMaker does not need to build distribution — it needs to connect to one that already covers the country. Neighbouring markets (Tanzania, Rwanda) share the same USSD aggregator, so expansion is a configuration change, not a rebuild.</p>
+    <p class="note">Sources: Communications Authority of Kenya Q4 FY2025/26 Sector Statistics; Safaricom FY26 results.</p>
+  </section>
+
+  <section>
+    <div class="kicker">06 — Roadmap &amp; milestones</div>
+    <h2>Mainnet in 90 days, Kenya pilot in 180</h2>
+    <table>
+      <tr><th>Milestone</th><th>Window</th><th>Deliverable</th></tr>
+      <tr><td class="n">M1 — Mainnet readiness</td><td>Month 1–2</td><td>Mainnet wallet derivation and Blockfrost mainnet config, DJED + USDCx token transfers verified on mainnet, fee estimation with buffer, mainnet audit of PIN/seed handling by an external reviewer.</td></tr>
+      <tr><td class="n">M2 — Production USSD</td><td>Month 2–3</td><td>Dedicated Kenya shortcode via Africa's Talking, production SMS with registered sender ID, uptime monitoring, 10s latency SLO enforced, Postgres migration.</td></tr>
+      <tr><td class="n">M3 — Nairobi pilot (500 users)</td><td>Month 3–5</td><td>500 registered wallets recruited through two agent partners and the local Cardano community; cash-in/cash-out at agents; support line; weekly on-chain reporting.</td></tr>
+      <tr><td class="n">M4 — Open + report</td><td>Month 5–6</td><td>Proof-of-usage report (wallets, transfers, DJED held, unique senders), public dashboard, agent playbook published for Tanzania/Rwanda replication.</td></tr>
+    </table>
+  </section>
+
+  <section>
+    <div class="kicker">07 — Budget</div>
+    <h2>$75,000 for six months to first 500 mainnet users</h2>
+    <table>
+      <tr><th>Line item</th><th>USD</th><th>Note</th></tr>
+      <tr><td>Engineering — 2 devs, 6 months (part-time)</td><td class="n">$24,000</td><td>Mainnet migration, USDCx/DJED support, hardening, dashboard</td></tr>
+      <tr><td>Security audit — signing &amp; seed handling</td><td class="n">$8,000</td><td>External review before mainnet funds move</td></tr>
+      <tr><td>Kenya regulatory &amp; legal</td><td class="n">$12,000</td><td>VASP Act 2025 assessment, entity setup, CA shortcode compliance, KYC/AML policy</td></tr>
+      <tr><td>USSD + SMS at scale</td><td class="n">$4,500</td><td>Dedicated Kenya shortcode, ~50k SMS, 6 months</td></tr>
+      <tr><td>Infrastructure &amp; data</td><td class="n">$3,000</td><td>Production VPS, Postgres, Blockfrost paid tier, monitoring</td></tr>
+      <tr><td>Agent network &amp; field pilot</td><td class="n">$15,000</td><td>Two Nairobi agents, onboarding, float management, user support</td></tr>
+      <tr><td>Liquidity float for pilot</td><td class="n">$6,000</td><td>Working DJED/USDCx float so transfers settle instantly</td></tr>
+      <tr><td>Contingency</td><td class="n">$2,500</td><td></td></tr>
+      <tr><td><b style="color:#fff">Total</b></td><td class="n" style="color:var(--green)">$75,000</td><td>Paid against the four milestones above</td></tr>
+    </table>
+    <p class="note">Unit economics after the pilot: ~$0.065 variable cost per transfer against a $0.10 flat fee; break-even near 200 daily transfers. The grant buys the pilot, not permanent subsidy.</p>
+  </section>
+
+  <section>
+    <div class="kicker">08 — KPIs</div>
+    <h2>What we will be measured on</h2>
+    <div class="grid g3">
+      <div class="card"><h3>500</h3><p>mainnet wallets with a non-zero balance by month 5</p></div>
+      <div class="card"><h3>5,000</h3><p>mainnet transfers in the first 90 days of the pilot</p></div>
+      <div class="card"><h3>$25,000</h3><p>stablecoin value held across pilot wallets (net-new, non-circular)</p></div>
+      <div class="card"><h3>&lt;3s</h3><p>median USSD response time (limit is 10s)</p></div>
+      <div class="card"><h3>40%</h3><p>month-2 retention (a user who transacts in their second month)</p></div>
+      <div class="card"><h3>100%</h3><p>of pilot transactions verifiable on Cardanoscan, published weekly</p></div>
+    </div>
+  </section>
+
+  <section>
+    <div class="kicker">09 — Team</div>
+    <h2>Built and operated by the people who will run the pilot</h2>
+    <div class="grid g2">
+      <div class="card"><h3>Tariq Monaffal — founder &amp; engineering</h3><p>Riyadh-based engineer running production payment and integration systems. Built RainMaker end to end: USSD engine, pycardano wallet layer, Blockfrost integration, PIN/seed security model. Operates live Cardano infrastructure and DEX trading tooling.</p></div>
+      <div class="card"><h3>Alto Smart Solutions — delivery entity</h3><p>The delivering organisation, with a Kenya-facing partner for agent operations and regulatory onboarding. Cardano-native: preprod node access, Blockfrost, Minswap integration experience.</p></div>
+    </div>
+    <p style="margin-top:16px">Stack reality check: Python 3.11, FastAPI, pycardano 0.19, SQLAlchemy, Africa's Talking USSD/SMS, Blockfrost, nginx, systemd, Docker — all in production use in this project today.</p>
+  </section>
+
+  <section>
+    <div class="kicker">10 — The ask</div>
+    <h2>$75,000 · six months · 500 Kenyans on Cardano mainnet</h2>
+    <p class="lede">RFP category: <b style="color:#fff">A — Wallets</b>. Funding converts a working testnet bridge into a mainnet wallet rail serving the largest excluded device class in East Africa, with usage that is verifiable on-chain from day one of the pilot.</p>
+    <div class="grid g2" style="margin-top:22px">
+      <div class="card"><h3>Links</h3><p>
+        Code: <a href="https://github.com/GentelZole/rainmaker">github.com/GentelZole/rainmaker</a><br>
+        Demo: <a href="https://hhoume.duckdns.org/rainmaker/">hhoume.duckdns.org/rainmaker</a><br>
+        Deck: <a href="https://hhoume.duckdns.org/rainmaker/pitch.html">hhoume.duckdns.org/rainmaker/pitch.html</a>
+      </p></div>
+      <div class="card"><h3>Contact</h3><p>tareqmonaffal@gmail.com<br>USSD: *384*225533# (preprod sandbox)</p></div>
+    </div>
+    <div class="foot">RainMaker · MIT · Cardano Preprod live · Submitted to Cardano PRIME (AlphaGrowth), November 2026</div>
+  </section>
+
+</div>
+</body>
+</html>
